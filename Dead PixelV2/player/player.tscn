@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://djeqawf2gi7cn"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_gygvm"]
+[ext_resource type="Texture2D" uid="uid://dp2f4oqlnyijl" path="res://sprites/VietnamHero1.png" id="2_776sg"]
+[ext_resource type="PackedScene" uid="uid://bq7wegdo2c4kn" path="res://player/magnum.tscn" id="3_qamyh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5h1o1"]
+radius = 11.0
+height = 38.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ace2t"]
+radius = 12.0
+height = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxvvr"]
+bg_color = Color(0, 0, 0, 0.396078)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tiobh"]
+bg_color = Color(0.218594, 0.71434, 0.215872, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_gygvm")
+
+[node name="playerSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("2_776sg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5h1o1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Magnum" parent="." instance=ExtResource("3_qamyh")]
+position = Vector2(10, -14)
+rotation = 1.5708
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CapsuleShape2D_ace2t")
+debug_color = Color(0.701961, 0.486275, 0.227451, 0.419608)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -26.0
+offset_top = -32.0
+offset_right = -18.0
+offset_bottom = 32.0
+theme_override_styles/background = SubResource("StyleBoxFlat_jxvvr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tiobh")
+value = 100.0
+fill_mode = 3
+show_percentage = false
