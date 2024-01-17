@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bq7wegdo2c4kn"]
+
+[ext_resource type="Script" path="res://player/magnum.gd" id="1_y10hc"]
+[ext_resource type="Texture2D" uid="uid://ueo3rnjwxoxe" path="res://sprites/Magnum1.png" id="2_tlvwc"]
+[ext_resource type="PackedScene" uid="uid://c1uh30jayevf1" path="res://player/bullet.tscn" id="3_mi7cx"]
+[ext_resource type="AudioStream" uid="uid://bcl2xaqwqnh8s" path="res://sounds/close_1.ogg" id="4_r65ht"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wwxgv"]
+radius = 345.013
+
+[node name="Magnum" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_y10hc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wwxgv")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="Pistol" type="Sprite2D" parent="WeaponPivot"]
+position = Vector2(9, -2)
+texture = ExtResource("2_tlvwc")
+
+[node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/Pistol"]
+unique_name_in_owner = true
+position = Vector2(13, 2)
+
+[node name="Bullet" parent="WeaponPivot/Pistol/ShootingPoint" instance=ExtResource("3_mi7cx")]
+visible = false
+position = Vector2(-351, -233)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_r65ht")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
